@@ -1,0 +1,5 @@
+.gitgnore
+club/__pycache__
+club/entidades/__pycache__
+club/patrones/__pycache__
+club/servicios/__pycache__
