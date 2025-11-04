@@ -1,13 +1,16 @@
 """
-Sistema de Gestión de Club Deportivo - DEMO AUTOMÁTICA
+Sistema de Gestión de Club Deportivo - DEMO AUTOMÁTICA CON PERSISTENCIA
 
-Este script demuestra todas las funcionalidades clave y los patrones de diseño implementados.
+Este script demuestra las funcionalidades y la persistencia de datos.
+Al ejecutarlo por primera vez, creará y guardará los datos.
+En ejecuciones posteriores, cargará los datos guardados.
 """
 
 from club.servicios.socio_service import SocioService
 from club.servicios.actividad_service import ActividadService
 from club.servicios.profesor_service import ProfesorService
 from club.servicios.pago_service import PagoService
+from club.servicios.persistencia_service import PersistenciaService
 from club.patrones.registry.club_service_registry import ClubServiceRegistry
 from club.patrones.singleton.club_registry import ClubRegistry
 
@@ -26,28 +29,19 @@ def setup_services():
         service_registry.registrar_servicio("actividad", ActividadService())
         service_registry.registrar_servicio("profesor", ProfesorService())
         service_registry.registrar_servicio("pago", PagoService())
+        service_registry.registrar_servicio("persistencia", PersistenciaService())
         
     return service_registry
 
-def demostracion_completa():
-    """Ejecuta una demostración completa de las funcionalidades del sistema."""
+def demostracion_y_creacion_de_datos():
+    """Ejecuta una demostración completa y crea los datos iniciales."""
     
-    # --- 1. CONFIGURACIÓN INICIAL ---
-    imprimir_titulo("1. CONFIGURACIÓN INICIAL")
-    service_registry = setup_services()
-    
-    # Limpiar datos de ejecuciones anteriores
-    ClubRegistry.get_instance().reset()
-
+    service_registry = ClubServiceRegistry.get_instance()
     socio_service = service_registry.obtener_servicio("socio")
     actividad_service = service_registry.obtener_servicio("actividad")
     profesor_service = service_registry.obtener_servicio("profesor")
     pago_service = service_registry.obtener_servicio("pago")
 
-    print("Servicios inicializados y registrados en ClubServiceRegistry.")
-    print(ClubRegistry.get_instance())
-
-    # --- 2. CREACIÓN DE ENTIDADES ---
     imprimir_titulo("2. CREACIÓN DE ENTIDADES (USANDO FACTORY PATTERN)")
     
     print("--- Creando Socios ---")
@@ -63,7 +57,6 @@ def demostracion_completa():
     p1 = profesor_service.crear_profesor("Juan Martínez", 25123456, 150000)
     p2 = profesor_service.crear_profesor("Laura Sánchez", 28456789, 180000)
 
-    # --- 3. ESTABLECIENDO RELACIONES ---
     imprimir_titulo("3. ESTABLECIENDO RELACIONES")
 
     print("--- Asignando profesores a actividades ---")
@@ -71,60 +64,58 @@ def demostracion_completa():
     actividad_service.asignar_profesor(natacion, p2)
 
     print("\n--- Inscribiendo socios a actividades ---")
-    actividad_service.inscribir_socio(tenis, s1) # Ana a Tenis
-    actividad_service.inscribir_socio(natacion, s1) # Ana a Natación
-    actividad_service.inscribir_socio(tenis, s2) # Carlos a Tenis (siendo Premium)
-    actividad_service.inscribir_socio(natacion, s3) # María a Natación
+    actividad_service.inscribir_socio(tenis, s1)
+    actividad_service.inscribir_socio(natacion, s1)
+    actividad_service.inscribir_socio(tenis, s2)
+    actividad_service.inscribir_socio(natacion, s3)
 
-    # --- 4. DEMOSTRACIÓN DE STRATEGY PATTERN (CÁLCULO DE CUOTAS) ---
     imprimir_titulo("4. DEMO DE STRATEGY PATTERN (CÁLCULO DE CUOTAS)")
 
     for socio in socio_service.listar_socios():
         print(f"--- Calculando cuota para {socio.nombre} ({socio.get_tipo()}) ---")
-        descripcion = socio_service.obtener_descripcion_cuota(socio)
-        print(descripcion)
+        print(socio_service.obtener_descripcion_cuota(socio))
 
-    # --- 5. DEMOSTRACIÓN DE OBSERVER PATTERN (PAGOS) ---
-    imprimir_titulo("5. DEMO DE OBSERVER PATTERN (PAGOS)")
+    imprimir_titulo("5. DEMO DE OBSERVER PATTERN (PAGOS Y TORNEOS)")
 
-    print("--- Enviando recordatorios de pago ---")
-    for socio in socio_service.listar_socios():
-        cuota = socio_service.calcular_cuota(socio)
-        pago_service.notificar_recordatorio_pago(socio, cuota, "2025-11-10")
-
-    print("\n--- Registrando un pago ---")
+    print("--- Registrando un pago ---")
     cuota_ana = socio_service.calcular_cuota(s1)
     pago_service.registrar_pago(s1, cuota_ana, "Tarjeta de Crédito")
-    print(f"Estado de pago de {s1.nombre}: {s1.estado_pago}")
 
-    # --- 6. DEMOSTRACIÓN DE OBSERVER PATTERN (TORNEOS) ---
-    imprimir_titulo("6. DEMO DE OBSERVER PATTERN (TORNEOS)")
-
-    print("--- Creando un nuevo torneo de Tenis ---")
-    print("El sistema notificará automáticamente a los socios inscritos en Tenis (Ana y Carlos).")
+    print("\n--- Creando un nuevo torneo de Tenis ---")
     torneo_tenis = actividad_service.crear_torneo(tenis, "Torneo de Otoño", costo_inscripcion=5000)
 
     print("\n--- Inscribiendo un socio al torneo ---")
     actividad_service.inscribir_socio_torneo(torneo_tenis, s1)
-    actividad_service.inscribir_socio_torneo(torneo_tenis, s3) # Intento fallido, no está en la actividad
 
-    # --- 7. DEMOSTRACIÓN DE SINGLETON Y REGISTRY ---
-    imprimir_titulo("7. DEMO DE SINGLETON Y REGISTRY")
+    imprimir_titulo("DEMO FINALIZADA - DATOS CREADOS")
+    print(ClubRegistry.get_instance())
 
-    print("--- Singleton: ClubRegistry ---")
-    r1 = ClubRegistry.get_instance()
-    r2 = ClubRegistry.get_instance()
-    print(f"Instancia 1 ID: {id(r1)}")
-    print(f"Instancia 2 ID: {id(r2)}")
-    print(f"¿Son la misma instancia? {r1 is r2}")
-    print(r1)
-
-    print("\n--- Registry: ClubServiceRegistry ---")
-    sr1 = ClubServiceRegistry.get_instance()
-    print(f"Servicios registrados: {sr1.listar_servicios()}")
-    print("El patrón Registry nos permite acceder a los servicios de forma centralizada.")
-
-    imprimir_titulo("DEMO FINALIZADA")
+def main():
+    """Función principal del sistema con persistencia."""
+    imprimir_titulo("SISTEMA DE GESTIÓN DE CLUB DEPORTIVO")
+    
+    # 1. Inicializar servicios
+    service_registry = setup_services()
+    persistencia_service = service_registry.obtener_servicio("persistencia")
+    
+    # 2. Intentar cargar datos
+    print("Intentando cargar datos guardados...")
+    datos_cargados = persistencia_service.cargar_datos()
+    
+    # 3. Decidir el flujo
+    if datos_cargados:
+        imprimir_titulo("DATOS CARGADOS EXITOSAMENTE")
+        print("El sistema ha sido restaurado desde la carpeta /data.")
+        print("Estado actual del club:")
+        print(ClubRegistry.get_instance())
+    else:
+        imprimir_titulo("EJECUTANDO DEMO POR PRIMERA VEZ")
+        print("No se encontraron datos, se creará un nuevo conjunto de datos de ejemplo.")
+        demostracion_y_creacion_de_datos()
+        
+        # 4. Guardar los datos nuevos al final de la demo
+        print("\nGuardando datos para la próxima ejecución...")
+        persistencia_service.guardar_datos()
 
 if __name__ == "__main__":
-    demostracion_completa()
+    main()
