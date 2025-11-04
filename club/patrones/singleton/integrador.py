@@ -1,4 +1,23 @@
 """
+Archivo integrador generado automaticamente
+Directorio: /home/ignaciomilutin/Documentos/UM/DisenoDeSistemas2025/TRABAJO_CLUB/Club_Deportivo/club/patrones/singleton
+Fecha: 2025-11-04 17:46:03
+Total de archivos integrados: 2
+"""
+
+# ================================================================================
+# ARCHIVO 1/2: __init__.py
+# Ruta: /home/ignaciomilutin/Documentos/UM/DisenoDeSistemas2025/TRABAJO_CLUB/Club_Deportivo/club/patrones/singleton/__init__.py
+# ================================================================================
+
+
+
+# ================================================================================
+# ARCHIVO 2/2: club_registry.py
+# Ruta: /home/ignaciomilutin/Documentos/UM/DisenoDeSistemas2025/TRABAJO_CLUB/Club_Deportivo/club/patrones/singleton/club_registry.py
+# ================================================================================
+
+"""
 Singleton Registry para la gestión centralizada de datos en memoria.
 """
 
@@ -147,3 +166,5 @@ class ClubRegistry:
                 "  - Actividades: {}\n"
                 "  - Profesores: {}\n"
                 "  - Pagos: {}").format(len(self._socios), len(self._actividades), len(self._profesores), len(self._pagos))
+
+

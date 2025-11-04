@@ -1,4 +1,23 @@
 """
+Archivo integrador generado automaticamente
+Directorio: /home/ignaciomilutin/Documentos/UM/DisenoDeSistemas2025/TRABAJO_CLUB/Club_Deportivo/club/patrones/strategy
+Fecha: 2025-11-04 17:46:03
+Total de archivos integrados: 2
+"""
+
+# ================================================================================
+# ARCHIVO 1/2: __init__.py
+# Ruta: /home/ignaciomilutin/Documentos/UM/DisenoDeSistemas2025/TRABAJO_CLUB/Club_Deportivo/club/patrones/strategy/__init__.py
+# ================================================================================
+
+
+
+# ================================================================================
+# ARCHIVO 2/2: cuota_strategy.py
+# Ruta: /home/ignaciomilutin/Documentos/UM/DisenoDeSistemas2025/TRABAJO_CLUB/Club_Deportivo/club/patrones/strategy/cuota_strategy.py
+# ================================================================================
+
+"""
 Strategy Pattern para el cálculo de cuotas de socios.
 Permite definir diferentes algoritmos de cálculo según el tipo de socio.
 """
@@ -91,3 +110,5 @@ class ContextoCuota:
     def obtener_descripcion(self, socio: Socio) -> str:
         """Obtiene la descripción del cálculo usando la estrategia asignada."""
         return self._estrategia.obtener_descripcion(socio)
+
+

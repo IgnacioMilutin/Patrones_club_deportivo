@@ -1,16 +1,26 @@
 """
-Entidad Profesor - Representa a los instructores de actividades
+Entidad Profesor - Representa a los instructores de actividades.
 """
 
+# Standard library imports
 from typing import List
 
-# Se elimina la dependencia circular y se usa type hinting
+# Local application imports
+# Se evita la importación directa para prevenir dependencias circulares
 # from club.entidades.actividad import Actividad
+
 
 class Profesor:
     """Representa un profesor/instructor del club. Contiene solo datos y estado."""
     
     def __init__(self, nombre: str, dni: int, sueldo: float):
+        """Inicializa un objeto Profesor.
+
+        Args:
+            nombre: El nombre completo del profesor.
+            dni: El Documento Nacional de Identidad del profesor.
+            sueldo: El sueldo mensual del profesor.
+        """
         self._nombre = nombre
         self._dni = dni
         self._sueldo = sueldo

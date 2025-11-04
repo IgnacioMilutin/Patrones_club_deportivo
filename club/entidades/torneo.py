@@ -1,18 +1,29 @@
 """
-Entidad Torneo - Representa torneos organizados por actividades
+Entidad Torneo - Representa torneos organizados por actividades.
 """
 
+# Standard library imports
 from typing import List
 from datetime import datetime
 
-# Se eliminan dependencias y se usa type hinting
+# Local application imports
+# Se evita la importación directa para prevenir dependencias circulares
 # from club.entidades.actividad import Actividad
 # from club.entidades.socio import Socio
+
 
 class Torneo:
     """Representa un torneo deportivo. Contiene solo datos y estado."""
     
     def __init__(self, nombre: str, actividad: 'Actividad', fecha: str, costo_inscripcion: float = 0):
+        """Inicializa un objeto Torneo.
+
+        Args:
+            nombre: El nombre del torneo.
+            actividad: La actividad a la que pertenece el torneo.
+            fecha: La fecha en formato string del torneo.
+            costo_inscripcion: El costo de inscripción al torneo (por defecto 0).
+        """
         self._nombre = nombre
         self._actividad = actividad
         self._fecha = fecha

@@ -1,21 +1,30 @@
 """
-Observador concreto para notificaciones de torneos
+Observador concreto para notificaciones de torneos.
 """
 
+# Local application imports
 from .observer import Observer
 
 
 class NotificadorTorneo(Observer):
     """
-    Observador que maneja notificaciones de nuevos torneos
+    Observador que maneja notificaciones de nuevos torneos.
     """
     
     def __init__(self, nombre: str = "Sistema de Torneos"):
+        """Inicializa el notificador.
+
+        Args:
+            nombre: El nombre del notificador.
+        """
         self._nombre = nombre
     
     def actualizar(self, evento: str, datos: dict):
-        """
-        Procesa eventos relacionados con torneos
+        """Procesa eventos relacionados con torneos.
+
+        Args:
+            evento: El tipo de evento a procesar.
+            datos: Un diccionario con los datos del evento.
         """
         if evento == "nuevo_torneo":
             self._notificar_nuevo_torneo(datos)
@@ -45,12 +54,12 @@ class NotificadorTorneo(Observer):
         print("="*60 + "\n")
 
     def _notificar_cancelacion(self, datos: dict):
-        """Notifica sobre cancelación de torneo"""
+        """Notifica sobre cancelación de torneo."""
         torneo = datos.get('torneo', 'Torneo')
         print(f"\n[AVISO] El torneo '{torneo}' ha sido cancelado.")
     
     def _notificar_inscripcion(self, datos: dict):
-        """Notifica sobre inscripción exitosa a un torneo"""
+        """Notifica sobre inscripción exitosa a un torneo."""
         socio = datos.get('socio')
         torneo = datos.get('torneo')
         if socio and torneo:

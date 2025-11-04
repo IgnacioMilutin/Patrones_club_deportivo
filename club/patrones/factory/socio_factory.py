@@ -1,33 +1,35 @@
 """
-Factory Method para creación de Socios
-Permite crear diferentes tipos de socios sin conocer las clases concretas
+Factory Method para creación de Socios.
+Permite crear diferentes tipos de socios sin conocer las clases concretas.
 """
 
+# Standard library imports
 from typing import Optional
+
+# Local application imports
 from club.entidades.socio import Socio, SocioRegular, SocioPremium, SocioInfantil
 
 
 class SocioFactory:
     """
-    Factory para crear instancias de diferentes tipos de socios
+    Factory para crear instancias de diferentes tipos de socios.
     """
     
     @staticmethod
     def crear_socio(tipo: str, nombre: str, dni: int, edad: Optional[int] = None) -> Socio:
-        """
-        Crea un socio según el tipo especificado
+        """Crea un socio según el tipo especificado.
         
         Args:
-            tipo: Tipo de socio ('regular', 'premium', 'infantil')
-            nombre: Nombre del socio
-            dni: DNI del socio
-            edad: Edad (requerida solo para socio infantil)
+            tipo: Tipo de socio ('regular', 'premium', 'infantil').
+            nombre: Nombre del socio.
+            dni: DNI del socio.
+            edad: Edad (requerida solo para socio infantil).
         
         Returns:
-            Instancia de Socio correspondiente
+            Una instancia de Socio correspondiente al tipo.
         
         Raises:
-            ValueError: Si el tipo de socio no es válido
+            ValueError: Si el tipo de socio no es válido o falta la edad.
         """
         tipo = tipo.lower().strip()
         
@@ -50,5 +52,5 @@ class SocioFactory:
     
     @staticmethod
     def tipos_disponibles() -> list:
-        """Retorna la lista de tipos de socios disponibles"""
+        """Retorna la lista de tipos de socios disponibles."""
         return ["regular", "premium", "infantil"]

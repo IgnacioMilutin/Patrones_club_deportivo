@@ -1,4 +1,23 @@
 """
+Archivo integrador generado automaticamente
+Directorio: /home/ignaciomilutin/Documentos/UM/DisenoDeSistemas2025/TRABAJO_CLUB/Club_Deportivo/club/patrones/registry
+Fecha: 2025-11-04 17:46:03
+Total de archivos integrados: 2
+"""
+
+# ================================================================================
+# ARCHIVO 1/2: __init__.py
+# Ruta: /home/ignaciomilutin/Documentos/UM/DisenoDeSistemas2025/TRABAJO_CLUB/Club_Deportivo/club/patrones/registry/__init__.py
+# ================================================================================
+
+
+
+# ================================================================================
+# ARCHIVO 2/2: club_service_registry.py
+# Ruta: /home/ignaciomilutin/Documentos/UM/DisenoDeSistemas2025/TRABAJO_CLUB/Club_Deportivo/club/patrones/registry/club_service_registry.py
+# ================================================================================
+
+"""
 Patrón Registry para gestión centralizada de servicios.
 Evita el uso de condicionales if/isinstance para despachar métodos.
 """
@@ -98,3 +117,4 @@ class ClubServiceRegistry:
     def __str__(self) -> str:
         servicios_str = ", ".join(self._servicios.keys()) if self._servicios else "Ninguno"
         return f"ClubServiceRegistry - Servicios registrados: {servicios_str}"
+

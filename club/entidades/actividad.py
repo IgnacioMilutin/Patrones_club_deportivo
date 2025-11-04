@@ -1,19 +1,25 @@
 """
-Entidad Actividad - Representa las actividades deportivas del club
+Entidad Actividad - Representa las actividades deportivas del club.
 """
 
+# Standard library imports
 from typing import List
+
+# Local application imports
 from club.patrones.observer.observer import Observer
 
-# Se eliminan imports no necesarios para la entidad
-# from club.entidades.profesor import Profesor
-# from club.entidades.socio import Socio
-# from club.entidades.torneo import Torneo
 
 class Actividad:
     """Representa una actividad deportiva del club. Contiene solo datos y estado."""
     
     def __init__(self, nombre: str, costo: float, capacidad: int):
+        """Inicializa una Actividad.
+
+        Args:
+            nombre: El nombre de la actividad.
+            costo: El costo mensual de la actividad.
+            capacidad: El número máximo de socios que pueden inscribirse.
+        """
         self._nombre = nombre
         self._costo = costo
         self._capacidad = capacidad
@@ -78,17 +84,17 @@ class Actividad:
             self._torneos.append(torneo)
     
     def agregar_observador(self, observador: 'Observer'):
-        """Agrega un observador para notificaciones (Observer Pattern)"""
+        """Agrega un observador para notificaciones (Observer Pattern)."""
         if observador not in self._observadores:
             self._observadores.append(observador)
     
     def eliminar_observador(self, observador: 'Observer'):
-        """Elimina un observador"""
+        """Elimina un observador."""
         if observador in self._observadores:
             self._observadores.remove(observador)
     
     def notificar_observadores(self, evento: str, datos: dict):
-        """Notifica a todos los observadores sobre un evento"""
+        """Notifica a todos los observadores sobre un evento."""
         for observador in self._observadores:
             observador.actualizar(evento, datos)
     

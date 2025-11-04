@@ -1,19 +1,28 @@
 """
-Entidad Socio - Representa a los miembros del club deportivo
-Implementa jerarquía de herencia para diferentes tipos de socios
+Entidad Socio - Representa a los miembros del club deportivo.
+Implementa jerarquía de herencia para diferentes tipos de socios.
 """
 
+# Standard library imports
 from abc import ABC, abstractmethod
 from typing import List
 from datetime import datetime
 
-# Se elimina la dependencia circular y se usa type hinting
+# Local application imports
+# Se evita la importación directa para prevenir dependencias circulares
 # from club.entidades.actividad import Actividad
+
 
 class Socio(ABC):
     """Clase base abstracta para todos los tipos de socios. Contiene solo datos y estado."""
     
     def __init__(self, nombre: str, dni: int):
+        """Inicializa un objeto Socio.
+
+        Args:
+            nombre: El nombre completo del socio.
+            dni: El Documento Nacional de Identidad del socio.
+        """
         self._nombre = nombre
         self._dni = dni
         self._actividades: List['Actividad'] = []
@@ -56,7 +65,7 @@ class Socio(ABC):
     
     @abstractmethod
     def get_tipo(self) -> str:
-        """Retorna el tipo de socio"""
+        """Retorna el tipo de socio como un string."""
         pass
     
     def __str__(self) -> str:
@@ -72,14 +81,14 @@ class Socio(ABC):
 
 
 class SocioRegular(Socio):
-    """Socio que paga según las actividades en las que participa"""
+    """Socio que paga según las actividades en las que participa."""
     
     def get_tipo(self) -> str:
         return "Regular"
 
 
 class SocioPremium(Socio):
-    """Socio que paga una cuota fija y accede a todas las actividades"""
+    """Socio que paga una cuota fija y accede a todas las actividades."""
     
     CUOTA_FIJA = 30000
     
@@ -88,11 +97,18 @@ class SocioPremium(Socio):
 
 
 class SocioInfantil(Socio):
-    """Socio menor de edad con cuota reducida y acceso limitado"""
+    """Socio menor de edad con cuota reducida y acceso limitado."""
     
     CUOTA_FIJA = 15000
     
     def __init__(self, nombre: str, dni: int, edad: int):
+        """Inicializa un Socio Infantil.
+
+        Args:
+            nombre: El nombre completo del socio.
+            dni: El DNI del socio.
+            edad: La edad del socio infantil.
+        """
         super().__init__(nombre, dni)
         self._edad = edad
     

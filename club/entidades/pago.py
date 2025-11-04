@@ -1,16 +1,26 @@
 """
-Entidad Pago - Representa el registro de pagos de cuotas
+Entidad Pago - Representa el registro de pagos de cuotas.
 """
 
+# Standard library imports
 from datetime import datetime
 
-# Se elimina la dependencia y se usa type hinting
+# Local application imports
+# Se evita la importación directa para prevenir dependencias circulares
 # from club.entidades.socio import Socio
 
+
 class Pago:
-    """Representa un pago de cuota realizado por un socio"""
+    """Representa un pago de cuota realizado por un socio."""
     
     def __init__(self, socio: 'Socio', monto: float, metodo: str):
+        """Inicializa un objeto Pago.
+
+        Args:
+            socio: La instancia del socio que realiza el pago.
+            monto: El monto del pago.
+            metodo: El método de pago (ej. 'Efectivo', 'Tarjeta').
+        """
         self._socio = socio
         self._monto = monto
         self._metodo = metodo
@@ -38,7 +48,7 @@ class Pago:
         return self._comprobante
     
     def _generar_comprobante(self) -> str:
-        """Genera un número de comprobante único"""
+        """Genera un número de comprobante único basado en el DNI y el timestamp."""
         timestamp = int(self._fecha.timestamp())
         return f"PAGO-{self._socio.dni}-{timestamp}"
     

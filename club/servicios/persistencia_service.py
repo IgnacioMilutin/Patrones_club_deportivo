@@ -1,11 +1,15 @@
 """
 Servicio de Persistencia de Datos
-Encapsula la lógica para guardar y cargar el estado del sistema usando Pickle
+Encapsula la lógica para guardar y cargar el estado del sistema usando Pickle.
 """
 
+# Standard library imports
 import pickle
 import os
+
+# Local application imports
 from club.patrones.singleton.club_registry import ClubRegistry
+
 
 class PersistenciaService:
     """
@@ -13,6 +17,11 @@ class PersistenciaService:
     """
     
     def __init__(self, directorio: str = "data"):
+        """Inicializa el servicio de persistencia.
+
+        Args:
+            directorio: El nombre del directorio donde se guardarán los datos.
+        """
         self._directorio = directorio
         self._registry = ClubRegistry.get_instance()
         self._filenames = {
@@ -26,9 +35,7 @@ class PersistenciaService:
         return os.path.join(self._directorio, filename)
 
     def guardar_datos(self):
-        """
-        Guarda cada diccionario/lista de entidades del ClubRegistry en un archivo .dat separado.
-        """
+        """Guarda cada diccionario/lista de entidades en un archivo .dat separado."""
         try:
             if not os.path.exists(self._directorio):
                 os.makedirs(self._directorio)
@@ -51,9 +58,8 @@ class PersistenciaService:
             print(f"[ERROR] No se pudieron guardar los datos: {e}")
 
     def cargar_datos(self) -> bool:
-        """
-        Carga el estado del ClubRegistry desde archivos .dat separados.
-        
+        """Carga el estado del ClubRegistry desde archivos .dat separados.
+
         Returns:
             True si al menos un archivo de datos se cargó, False en caso contrario.
         """

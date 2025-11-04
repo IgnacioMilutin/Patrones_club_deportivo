@@ -1,16 +1,19 @@
 """
-Factory Method para creación de Actividades
-Permite crear actividades predefinidas con configuraciones específicas
+Factory Method para creación de Actividades.
+Permite crear actividades predefinidas con configuraciones específicas.
 """
 
-from club.entidades.actividad import Actividad
+# Standard library imports
 from typing import Optional
+
+# Local application imports
+from club.entidades.actividad import Actividad
 
 
 class ActividadFactory:
     """
-    Factory para crear instancias de actividades deportivas
-    Incluye configuraciones predefinidas para actividades comunes
+    Factory para crear instancias de actividades deportivas.
+    Incluye configuraciones predefinidas para actividades comunes.
     """
     
     # Configuraciones predefinidas de actividades
@@ -30,16 +33,15 @@ class ActividadFactory:
     @staticmethod
     def crear_actividad(nombre: str, costo: Optional[float] = None, 
                        capacidad: Optional[int] = None) -> Actividad:
-        """
-        Crea una actividad deportiva
+        """Crea una actividad deportiva.
         
         Args:
-            nombre: Nombre de la actividad
-            costo: Costo mensual (si es None, usa valor predefinido)
-            capacidad: Capacidad máxima (si es None, usa valor predefinido)
+            nombre: Nombre de la actividad.
+            costo: Costo mensual (si es None, usa valor predefinido).
+            capacidad: Capacidad máxima (si es None, usa valor predefinido).
         
         Returns:
-            Instancia de Actividad
+            Instancia de Actividad.
         """
         nombre_lower = nombre.lower().strip()
         
@@ -53,17 +55,23 @@ class ActividadFactory:
         
         nombre_formato = nombre.capitalize()
         
-        # El constructor de Actividad ya no necesita sueldoProfesor
         return Actividad(nombre_formato, costo_final, capacidad_final)
     
     @staticmethod
     def actividades_disponibles() -> list:
-        """Retorna la lista de actividades predefinidas"""
+        """Retorna la lista de actividades predefinidas."""
         return list(ActividadFactory.ACTIVIDADES_PREDEFINIDAS.keys())
     
     @staticmethod
     def obtener_info_actividad(nombre: str) -> dict:
-        """Obtiene información de una actividad predefinida"""
+        """Obtiene información de una actividad predefinida.
+
+        Args:
+            nombre: El nombre de la actividad.
+
+        Returns:
+            Un diccionario con la información de la actividad o None si no existe.
+        """
         nombre_lower = nombre.lower().strip()
         if nombre_lower in ActividadFactory.ACTIVIDADES_PREDEFINIDAS:
             return ActividadFactory.ACTIVIDADES_PREDEFINIDAS[nombre_lower].copy()

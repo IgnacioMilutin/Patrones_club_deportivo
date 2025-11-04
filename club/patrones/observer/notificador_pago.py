@@ -1,21 +1,30 @@
 """
-Observador concreto para notificaciones de pagos
+Observador concreto para notificaciones de pagos.
 """
 
+# Local application imports
 from .observer import Observer
 
 
 class NotificadorPago(Observer):
     """
-    Observador que maneja notificaciones de pagos de cuotas
+    Observador que maneja notificaciones de pagos de cuotas.
     """
     
     def __init__(self, nombre: str = "Sistema de Pagos"):
+        """Inicializa el notificador.
+
+        Args:
+            nombre: El nombre del notificador.
+        """
         self._nombre = nombre
     
     def actualizar(self, evento: str, datos: dict):
-        """
-        Procesa eventos relacionados con pagos
+        """Procesa eventos relacionados con pagos.
+
+        Args:
+            evento: El tipo de evento a procesar.
+            datos: Un diccionario con los datos del evento.
         """
         if evento == "pago_registrado":
             self._notificar_pago_exitoso(datos)
@@ -25,7 +34,7 @@ class NotificadorPago(Observer):
             self._notificar_recordatorio(datos)
     
     def _notificar_pago_exitoso(self, datos: dict):
-        """Notifica sobre un pago exitoso"""
+        """Notifica sobre un pago exitoso."""
         socio_nombre = datos.get('socio', 'Socio')
         monto = datos.get('monto', 0)
         comprobante = datos.get('comprobante', 'N/A')
@@ -40,7 +49,7 @@ class NotificadorPago(Observer):
         print("="*60 + "\n")
 
     def _notificar_pago_vencido(self, datos: dict):
-        """Notifica sobre un pago vencido"""
+        """Notifica sobre un pago vencido."""
         socio_nombre = datos.get('socio', 'Socio')
         monto = datos.get('monto', 0)
         
@@ -52,7 +61,7 @@ class NotificadorPago(Observer):
         print("="*60 + "\n")
 
     def _notificar_recordatorio(self, datos: dict):
-        """Notifica un recordatorio de pago"""
+        """Notifica un recordatorio de pago."""
         socio_nombre = datos.get('socio', 'Socio')
         monto = datos.get('monto', 0)
         vencimiento = datos.get('vencimiento', 'Próximamente')
