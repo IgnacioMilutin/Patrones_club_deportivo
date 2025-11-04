@@ -1,4 +1,4 @@
-.gitgnore
+.gitignore
 club/__pycache__
 club/entidades/__pycache__
 club/patrones/__pycache__
